@@ -35,7 +35,7 @@ parents = {};
 parents["a"] = "start";
 parents["b"] = "start";
 parents["c"] = "start";
-parents["final"] = None;
+parents["final"] = null;
 
 // PROCESSED NODE LIST
 processed = [];
@@ -62,7 +62,19 @@ const findLowestCost = (costs) => {
   console.log(`Go to -> ${node}`);
   while (node !== null) {
     //undefined
-    const cost = costs[node];
+    let cost = costs[node];
     const neighbours = graph[node];
+    for (n in Object.keys(neighbours)) {
+      const newCost = cost + neighbours[n];
+      if (newCost > cost[n]) {
+        cost[n] = newCost;
+        parents[n] = node;
+      }
+    }
+    processed.push(node);
+    node = findLowestCostNode(costs);
+    console.log(`Go to ->  ${node !== null ? node : "finish"}`);
   }
 };
+
+findLowestCost(costs);
